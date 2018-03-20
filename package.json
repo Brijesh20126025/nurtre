@@ -1,0 +1,33 @@
+{
+  "name": "nurtre",
+  "version": "0.0.3",
+  "description": "nurtre",
+  "main": "dist/index.js",
+  "scripts": {
+    "run": "node app.js"
+  },
+  "author": "Brijesh Prajapati",
+  "license": "ISC",
+  "typescript": {
+    "definition": "index.d.ts"
+  },
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "cookie-parser": "1.4.3",
+    "deferred": "0.7.8",
+    "del": "^3.0.0",
+    "express": "4.16.2",
+    "gulp-typescript": "3.2.3",
+    "jsonwebtoken": "8.1.1",
+    "merge2": "^1.1.0",
+    "morgan": "1.9.0",
+    "path": "0.12.7",
+    "pipes-and-filters": "0.0.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.2.1",
+    "typescript": "^2.4.2"
+  }
+}
