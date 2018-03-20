@@ -4,7 +4,8 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import { createJwtTokenForUser } from './modules/sign-up/signup';
 import { validateUser } from './modules/validate-user/validate-user';
-import {} from './modules/authenticate/authenticate';
+import { authenticate } from './modules/authenticate/authenticate';
+import { getWebinar } from './modules/webinar/getWebinar';
 const cookieParser = require('cookie-parser');
 
 let app: express.Express = express();
@@ -31,7 +32,7 @@ app.use(cookieParser());
 
 app.use('/signUp', createJwtTokenForUser);
 
-app.use('/getwebinar/', validateUser,authenticateUser,  );
+app.use('/getwebinar', validateUser, authenticate, getWebinar);
 
 app.get('/', (req, res) => {
     res.send({ err: false, message: 'Welcome to Nurtre please sign up' });

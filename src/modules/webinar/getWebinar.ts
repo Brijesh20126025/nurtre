@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { resolve } from 'url';
 
 export async function getWebinar(req: express.Request, res: express.Response, next) {
     try {
