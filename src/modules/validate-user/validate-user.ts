@@ -11,10 +11,21 @@ export function validateUser(req: express.Request, res: express.Response, next) 
         res.send({ err: true, result: { message: 'Request authorization hearder not found', data: null } });
         return;
     }
+
+    // chacking from session.
+
+    if (!req.session.user_id) {
+        res.send({ err: true, result: { message: 'User is not valid', data: null } });
+        return;
+    }
+
     let jwtToken: string = req.headers.authorization;
     let user: any = null;
     try {
         user = jwt.verify(jwtToken, secertKey);
+        // here change the req.user and set our custom user
+        // it will be useful to validate the user in sebsequent request.
+        req["user"] = user;
         console.log(JSON.stringify(user));
         next();
         return;

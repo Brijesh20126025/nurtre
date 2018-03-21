@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as connectionManager from '../connection-manager/connection';
 
 export async function getWebinar(req: express.Request, res: express.Response, next) {
     try {
@@ -24,7 +25,6 @@ export async function getWebinar(req: express.Request, res: express.Response, ne
             res.send({ err: true, result: { message: 'UserId Or Mentor Id missing ', data: null } });
             return;
         }
-
         // get the all webnair of the menotr Id
         let mentorwebnair: { err: any, result: any } = await mentorWebnair(mentorId);
         if (mentorwebnair.err) {
@@ -49,17 +49,24 @@ export async function getWebinar(req: express.Request, res: express.Response, ne
 }
 
 export function mentorWebnair(mentorId: string) {
-
     let query: string = "select * from webinar where mentorId = " + mentorId;
-
-    return new Promise<{ err: any, result: any }>((resolve, reject) => {
-
-        dbModule.find(query, (err, data) => {
+    return new Promise<{ err: any, result: any }>(async (resolve, reject) => {
+        // make the data base connection
+        // if you want to connect with your local config connect with nativeConnectByConfig(your config)
+        let connection: { err: any, result: any } = await connectionManager.nativeConnect();
+        if (connection.err) {
+            console.log("Error while connecting to the datanbase");
+            resolve({ err: connection.err, result: null });
+            return;
+        }
+        let connectionObj: any = connection.result;
+        connectionObj.query(query, (err, data) => {
             if (err) {
                 console.log("Error while getting the mentor webinar data");
                 resolve({ err: err, result: null });
                 return;
             }
+            connectionObj.end();
             resolve({ err: null, result: data });
             return;
         })
@@ -67,17 +74,24 @@ export function mentorWebnair(mentorId: string) {
 }
 
 export function recommWebinarForUsers(userId: string) {
-
     let query: string = "select * from recomm-webinar where userId = " + userId;
-
-    return new Promise<{ err: any, result: any }>((resolve, reject) => {
-
-        dbModule.find(query, (err, data) => {
+    return new Promise<{ err: any, result: any }>(async (resolve, reject) => {
+        // make the data base connection
+        // if you want to connect with your local config connect with nativeConnectByConfig(your config)
+        let connection: { err: any, result: any } = await connectionManager.nativeConnect();
+        if (connection.err) {
+            console.log("Error while connecting to the datanbase");
+            resolve({ err: connection.err, result: null });
+            return;
+        }
+        let connectionObj: any = connection.result;
+        connectionObj.query(query, (err, data) => {
             if (err) {
                 console.log("Error while getting the user Recomm. webinar data");
                 resolve({ err: err, result: null });
                 return;
             }
+            connectionObj.end();
             resolve({ err: null, result: data });
             return;
         })
