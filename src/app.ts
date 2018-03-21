@@ -11,21 +11,14 @@ import { requiredLogin } from './modules/authenticate/requiredAuthentication';
 const cookieParser = require('cookie-parser');
 
 let app: express.Express = express();
-// new wolframAlpha(appId).query('how far is sun from earth', (err, res) => {
-//     console.log(err);
-//     console.log(res);
-// });
 
 app.use(logger('dev'));
 app.use(bodyParser.json({
     limit: '500mb'
-    // parameterLimit: 1000000
 }));
-// app.use(express.session());
 let data: any = {
     limit: '500mb',
     parameterLimit: 1000000,
-    // making this consistent with app server
     extended: true
 };
 app.use(bodyParser.urlencoded(data));
@@ -59,8 +52,6 @@ app.post('/', (req, res) => {
 
 // Handle 404 
 app.use((req, res, next) => {
-    //This is our custom error message.
-    // If raising error from within the app, we will have to set up error.status
     let err = {
         message: 'Not Found',
         status: 404
